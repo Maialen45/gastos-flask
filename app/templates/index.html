@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro de gastos</title>
+    <link rel="stylesheet" href="../static/css/general.css" />
+    <link rel="stylesheet" href="../static/css/inicio.css" />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/gastos.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/sidebar.css')}}"
+    />
+  </head>
+  <body>
+    <nav>
+      <!-- <div>Logo de la página web</div> -->
+      <div class="nav-links">
+        <ul>
+          <li><a href="">Producto</a></li>
+          <li><a href="">Soluciones</a></li>
+          <li><a href="">Documentación</a></li>
+          <li><a href="">Contacto</a></li>
+        </ul>
+        <div class="nav-btn">
+          <button>Log in</button>
+          <button>Register</button>
+        </div>
+      </div>
+    </nav>
+    {% block content %} {% endblock %}
+  </body>
+</html>

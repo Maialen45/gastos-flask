@@ -1,0 +1,28 @@
+nav {
+  position: fixed;
+  z-index: 1000;
+  width: 100vw;
+}
+.nav-links {
+  display: flex;
+  background-color: lightblue;
+  height: 4rem;
+  align-items: center;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.nav-links ul {
+  padding-left: 0;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links li {
+  display: inline;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: black;
+}

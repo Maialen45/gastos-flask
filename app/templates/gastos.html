@@ -1,0 +1,93 @@
+{% extends 'dashboard.html' %} {% block main_content %}
+<div class="contenedor">
+  <h1 class="titulo">Gastos</h1>
+
+  <button
+    class="btn-abrir-modal"
+    data-bs-toggle="modal"
+    data-bs-target="#modalGasto"
+  >
+    Añadir gasto
+  </button>
+
+  <table class="tabla-gastos">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Fecha</th>
+        <th>Categoría</th>
+        <th>Descripción</th>
+        <th>Total</th>
+        <th>Pago</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for gasto in gastos %}
+      <tr>
+        <td>{{ gasto.id }}</td>
+        <td>{{ gasto.fecha or '' }}</td>
+        <td>{{ gasto.categoria }}</td>
+        <td>{{ gasto.descripcion or '' }}</td>
+        <td>{{ "%.2f"|format(gasto.total) }}</td>
+        <td>{{ gasto.pago }}</td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="6" class="sin-gastos">No hay gastos para mostrar</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="modalGasto"
+    tabindex="-1"
+    aria-labelledby="modalGastoLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <form
+        class="formulario-gasto modal-content"
+        method="POST"
+        action="/gastos"
+      >
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalGastoLabel">Nuevo gasto</h5>
+          <button
+            type="button"
+            class="cerrar-modal"
+            data-bs-dismiss="modal"
+            aria-label="Cerrar"
+          >
+            ×
+          </button>
+        </div>
+        <div class="modal-body">
+          <label>Categoría</label>
+          <input type="text" name="categoria" required />
+
+          <label>Total</label>
+          <input type="number" step="0.01" name="total" required />
+
+          <label>Pago</label>
+          <input type="text" name="pago" required />
+
+          <label>Fecha</label>
+          <input type="date" name="fecha" />
+
+          <label>Descripción</label>
+          <textarea name="descripcion"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-cancelar" data-bs-dismiss="modal">
+            Cancelar
+          </button>
+          <button type="submit" class="btn-guardar">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
