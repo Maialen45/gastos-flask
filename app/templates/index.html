@@ -6,6 +6,8 @@
     <title>Registro de gastos</title>
     <link rel="stylesheet" href="../static/css/general.css" />
     <link rel="stylesheet" href="../static/css/inicio.css" />
+    <link rel="stylesheet" href="../static/css/register.css" />
+
     <link
       rel="stylesheet"
       href="{{url_for('static', filename='css/gastos.css')}}"
@@ -26,11 +28,36 @@
           <li><a href="">Contacto</a></li>
         </ul>
         <div class="nav-btn">
-          <button>Log in</button>
-          <button>Register</button>
+          <div id="auth-buttons">
+            <button><a href="/login">Login</a></button>
+            <button><a href="/register">Register</a></button>
+          </div>
+          <div id="logout-button" style="display: none">
+            <button onclick="logout()">Logout</button>
+          </div>
         </div>
       </div>
     </nav>
     {% block content %} {% endblock %}
   </body>
+  <script>
+    function checkAuth() {
+      const token = localStorage.getItem("access_token");
+      if (token) {
+        document.getElementById("auth-buttons").style.display = "none";
+        document.getElementById("logout-button").style.display = "block";
+      } else {
+        document.getElementById("auth-buttons").style.display = "block";
+        document.getElementById("logout-button").style.display = "none";
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("access_token");
+      window.location.href = "/";
+    }
+
+    // Al cargar la página
+    checkAuth();
+  </script>
 </html>

@@ -7,6 +7,12 @@
       <a href="/analisis" class="sidebar-item">Análisis</a>
     </nav>
   </aside>
-  <main class="main-content">{% block main_content %} {% endblock %}</main>
+  <main class="main-content">
+    {% block main_content %}
+    <script>
+      localStorage.setItem("access_token", "{{ token }}");
+    </script>
+    {% endblock %}
+  </main>
 </div>
 {% endblock %}

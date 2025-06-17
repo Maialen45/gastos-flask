@@ -1,5 +1,5 @@
 from flask import Flask
-from .extensions import db, migrate
+from .extensions import db, migrate, jwt
 
 def create_app(config_class='instance.config.Config'):
     app = Flask(__name__)
@@ -7,9 +7,13 @@ def create_app(config_class='instance.config.Config'):
 
     db.init_app(app)
     migrate.init_app(app, db)
+    jwt.init_app(app)
 
-    from . import models
-    from .routes import main_bp
+    from .models import gastos, usuario
+    from .routes.gastos import main_bp
+    from .routes.auth import auth_bp
     app.register_blueprint(main_bp)
+    app.register_blueprint(auth_bp)
+
 
     return app

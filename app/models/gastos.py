@@ -1,4 +1,4 @@
-from .extensions import db
+from ..extensions import db
 from sqlalchemy.dialects.postgresql import NUMERIC
 
 class Gastos(db.Model):
@@ -10,4 +10,6 @@ class Gastos(db.Model):
     descripcion = db.Column(db.Text, nullable=True)
     total = db.Column(NUMERIC(10, 2), nullable=False)
     pago = db.Column(db.String(30), nullable=False)
-
+    usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=True)
+    
+    usuarios = db.Relationship('Usuario', back_populates='gastos')
