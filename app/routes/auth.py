@@ -61,7 +61,7 @@ def login():
             return render_template('login.html', error='Credenciales inválidas')
 
         # Crear token JWT
-        access_token = create_access_token(identity=str(usuario.id))
+        access_token = create_access_token(identity=str(usuario.id), additional_claims={'role': usuario.role})
         response = make_response(render_template('dashboard.html', usuario=usuario, token=access_token))
         set_access_cookies(response, access_token)
 

@@ -10,6 +10,6 @@ class Gastos(db.Model):
     descripcion = db.Column(db.Text, nullable=True)
     total = db.Column(NUMERIC(10, 2), nullable=False)
     pago = db.Column(db.String(30), nullable=False)
-    usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=True)
+    usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), nullable=False)
     
     usuarios = db.Relationship('Usuario', back_populates='gastos')

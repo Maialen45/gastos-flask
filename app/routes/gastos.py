@@ -1,6 +1,7 @@
 from flask import Blueprint, redirect, render_template, request, jsonify
 from ..models.gastos import Gastos
 from ..extensions import db
+from ..utils.decorators import roles_required
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 gastos_bp = Blueprint('gastos', __name__)
@@ -10,7 +11,7 @@ def inicio():
     return render_template('index.html')
 
 @gastos_bp.route('/gastos', methods=['GET', 'POST', 'DELETE'])
-@jwt_required()
+@roles_required('admin')
 def gastos():
     current_user_id = get_jwt_identity()
 
