@@ -1,17 +1,17 @@
 from flask import Blueprint, redirect, render_template, request, jsonify
-from ..models.gastos import Gastos
+from ..models.ingresos import Ingresos
 from ..extensions import db
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
-gastos_bp = Blueprint('gastos', __name__)
+ingresos_bp = Blueprint('ingresos', __name__)
 
-@gastos_bp.route('/')
+@ingresos_bp.route('/')
 def inicio():
     return render_template('index.html')
 
-@gastos_bp.route('/gastos', methods=['GET', 'POST', 'DELETE'])
+@ingresos_bp.route('/ingresos', methods=['GET', 'POST'])
 @jwt_required()
-def gastos():
+def ingresos():
     current_user_id = get_jwt_identity()
 
     if request.method == 'POST':
@@ -26,7 +26,7 @@ def gastos():
         fecha = data.get('fecha')
         descripcion = data.get('descripcion')
 
-        nuevo_gasto = Gastos(
+        nuevo_gasto = Ingresos(
             categoria=categoria,
             total=float(total),
             pago=pago,
@@ -37,28 +37,28 @@ def gastos():
         db.session.add(nuevo_gasto)
         db.session.commit()
         
-        gastos = Gastos.query.filter_by(usuario_id=current_user_id).all()
-        return render_template('gastos.html', gastos=gastos)
+        ingresos = Ingresos.query.filter_by(usuario_id=current_user_id).all()
+        return render_template('ingresos.html', ingresos=ingresos)
     
     categoria_filtro = request.args.get('categoria')
 
     if categoria_filtro:
-        gastos = Gastos.query.filter_by(usuario_id=current_user_id, categoria=categoria_filtro).all()
+        ingresos = Ingresos.query.filter_by(usuario_id=current_user_id, categoria=categoria_filtro).all()
     else:
-        gastos = Gastos.query.filter_by(usuario_id=current_user_id).all()
+        ingresos = Ingresos.query.filter_by(usuario_id=current_user_id).all()
     
-    return render_template('gastos.html', gastos=gastos)
+    return render_template('ingresos.html', ingresos=ingresos)
 
-@gastos_bp.route('/gastos/eliminar/<int:gasto_id>', methods=['POST'])
+@ingresos_bp.route('/ingresos/eliminar/<int:ingreso_id>', methods=['POST'])
 @jwt_required()
-def eliminar_gasto(gasto_id):
+def eliminar_ingreso(ingreso_id):
     current_user_id = get_jwt_identity()
-    gasto = Gastos.query.filter_by(id=gasto_id, usuario_id=current_user_id).first()
+    ingreso = Ingresos.query.filter_by(id=ingreso_id, usuario_id=current_user_id).first()
 
-    if not gasto:
+    if not ingreso:
         return jsonify({'error': 'Gasto no encontrado o sin permiso'}), 404
     
-    db.session.delete(gasto)
+    db.session.delete(ingreso)
     db.session.commit()
 
-    return redirect('/gastos')
+    return redirect('/ingresos')

@@ -9,6 +9,7 @@ class Usuario(db.Model):
     password_hash = db.Column(db.String(256), nullable=False)
     
     gastos = db.Relationship('Gastos', back_populates='usuarios')
+    ingresos = db.Relationship('Ingresos', back_populates='usuarios')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

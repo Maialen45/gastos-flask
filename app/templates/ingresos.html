@@ -1,16 +1,16 @@
 {% extends 'dashboard.html' %} {% block main_content %}
 <div class="container my-5">
-  <h1 class="mb-4">Gastos</h1>
+  <h1 class="mb-4">Ingresos</h1>
 
   <button
     class="btn btn-primary mb-4"
     data-bs-toggle="modal"
-    data-bs-target="#modalGasto"
+    data-bs-target="#modalIngreso"
   >
-    Añadir gasto
+    Añadir ingreso
   </button>
 
-  <form action="/gastos" method="GET" class="row g-3 mb-4">
+  <form action="/ingresos" method="GET" class="row g-3 mb-4">
     <div class="col-auto">
       <input
         type="text"
@@ -22,7 +22,7 @@
     </div>
     <div class="col-auto">
       <button type="submit" class="btn btn-outline-primary">Filtrar</button>
-      <a href="/gastos" class="btn btn-outline-secondary">Limpiar</a>
+      <a href="/ingresos" class="btn btn-outline-secondary">Limpiar</a>
     </div>
   </form>
 
@@ -39,18 +39,18 @@
         </tr>
       </thead>
       <tbody>
-        {% for gasto in gastos %}
+        {% for ingreso in ingresos %}
         <tr>
-          <td>{{ gasto.fecha or '' }}</td>
-          <td>{{ gasto.categoria }}</td>
-          <td>{{ gasto.descripcion or '' }}</td>
-          <td>{{ "%.2f"|format(gasto.total) }}</td>
-          <td>{{ gasto.pago }}</td>
+          <td>{{ ingreso.fecha or '' }}</td>
+          <td>{{ ingreso.categoria }}</td>
+          <td>{{ ingreso.descripcion or '' }}</td>
+          <td>{{ "%.2f"|format(ingreso.total) }}</td>
+          <td>{{ ingreso.pago }}</td>
           <td>
             <form
               method="POST"
-              action="/gastos/eliminar/{{ gasto.id }}"
-              onsubmit="return confirm('¿Seguro que quieres eliminar este gasto?');"
+              action="/ingresos/eliminar/{{ ingreso.id }}"
+              onsubmit="return confirm('¿Seguro que quieres eliminar este ingreso?');"
             >
               <button type="submit" class="btn btn-sm btn-danger">
                 Eliminar
@@ -61,7 +61,7 @@
         {% else %}
         <tr>
           <td colspan="6" class="text-center text-muted">
-            No hay gastos para mostrar
+            No hay ingresos para mostrar
           </td>
         </tr>
         {% endfor %}
@@ -72,15 +72,15 @@
   <!-- Modal -->
   <div
     class="modal fade"
-    id="modalGasto"
+    id="modalIngreso"
     tabindex="-1"
-    aria-labelledby="modalGastoLabel"
+    aria-labelledby="modalIngresoLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog">
-      <form class="modal-content" method="POST" action="/gastos">
+      <form class="modal-content" method="POST" action="/ingresos">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalGastoLabel">Nuevo gasto</h5>
+          <h5 class="modal-title" id="modalIngresoLabel">Nuevo gasto</h5>
           <button
             type="button"
             class="btn-close"
