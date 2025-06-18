@@ -39,7 +39,11 @@ def register():
         db.session.add(usuario)
         db.session.commit()
 
-        return render_template('register.html')
+        access_token = create_access_token(identity=str(usuario.id), additional_claims={'role': usuario.role})
+        response = make_response(render_template('dashboard.html', usuario=usuario, token=access_token))
+        set_access_cookies(response, access_token)
+
+        return response
     else:
         return render_template('register.html')
 

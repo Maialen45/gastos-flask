@@ -11,7 +11,7 @@ def inicio():
     return render_template('index.html')
 
 @gastos_bp.route('/gastos', methods=['GET', 'POST', 'DELETE'])
-@roles_required('admin')
+@jwt_required()
 def gastos():
     current_user_id = get_jwt_identity()
 
@@ -63,3 +63,9 @@ def eliminar_gasto(gasto_id):
     db.session.commit()
 
     return redirect('/gastos')
+
+@gastos_bp.route('/analisis', methods=['GET'])
+# @roles_required('admin')
+@jwt_required()
+def mostrar_analisis():
+    return render_template('analisis.html')

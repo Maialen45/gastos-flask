@@ -1,18 +1,24 @@
 {% extends 'index.html' %} {% block content %}
-<div class="dashboard-container">
-  <aside class="sidebar">
-    <nav class="sidebar-links">
-      <a href="/gastos" class="sidebar-item">Gastos</a>
-      <a href="/ingresos" class="sidebar-item">Ingresos</a>
-      <a href="/analisis" class="sidebar-item">Análisis</a>
-    </nav>
-  </aside>
-  <main class="main-content">
-    {% block main_content %}
-    <script>
-      localStorage.setItem("access_token", "{{ token }}");
-    </script>
-    {% endblock %}
-  </main>
+<div class="container-fluid">
+  <div class="row vh-100">
+    <!-- SIDEBAR -->
+    <aside class="col-md-3 col-lg-2 bg-dark text-white d-flex flex-column p-3">
+      <h4 class="text-center mb-4">Panel</h4>
+      <nav class="nav flex-column sidebar-links">
+        <a href="/gastos" class="nav-link text-white">Gastos</a>
+        <a href="/ingresos" class="nav-link text-white">Ingresos</a>
+        <a href="/analisis" class="nav-link text-white">Análisis</a>
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="col-md-9 col-lg-10 p-4 bg-light">
+      {% block main_content %}
+      <script>
+        localStorage.setItem("access_token", "{{ token }}");
+      </script>
+      {% endblock %}
+    </main>
+  </div>
 </div>
 {% endblock %}
