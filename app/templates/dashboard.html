@@ -12,8 +12,10 @@
     </aside>
 
     <!-- MAIN CONTENT -->
-    <main class="col-md-9 col-lg-10 p-4 bg-light">
-      {% block main_content %}
+    <main class="col-md-9 col-lg-10 p-4 mt-5 bg-light">
+      {% if mostrar_welcome %}
+      <h1>Bienvenido {{ usuario.username }}</h1>
+      {% endif %} {% block main_content %}
       <script>
         localStorage.setItem("access_token", "{{ token }}");
       </script>

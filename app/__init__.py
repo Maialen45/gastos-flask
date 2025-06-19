@@ -1,9 +1,16 @@
 from flask import Flask
 from .extensions import db, migrate, jwt
 
-def create_app(config_class='instance.config.Config'):
+def create_app(config_class=None):
     app = Flask(__name__)
-    app.config.from_object(config_class)
+    if config_class == 'testing':
+        app.config.from_mapping({
+            'TESTING': True,
+            'SQLALCHEMY_DATABASE_URI': 'sqlite:///:memory:',
+            'JWT_SECRET_KEY': 'test-secret-key',
+        })
+    else: 
+        app.config.from_object('instance.config.Config')
 
     db.init_app(app)
     migrate.init_app(app, db)

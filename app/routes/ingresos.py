@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, render_template, request, jsonify
 from ..models.ingresos import Ingresos
+from ..models.usuario import Usuario
 from ..extensions import db
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
@@ -13,6 +14,7 @@ def inicio():
 @jwt_required()
 def ingresos():
     current_user_id = get_jwt_identity()
+    usuario = Usuario.query.get(current_user_id)
 
     if request.method == 'POST':
         data = request.form
@@ -38,7 +40,7 @@ def ingresos():
         db.session.commit()
         
         ingresos = Ingresos.query.filter_by(usuario_id=current_user_id).all()
-        return render_template('ingresos.html', ingresos=ingresos)
+        return render_template('ingresos.html', ingresos=ingresos, usuario=usuario)
     
     categoria_filtro = request.args.get('categoria')
 
@@ -47,7 +49,7 @@ def ingresos():
     else:
         ingresos = Ingresos.query.filter_by(usuario_id=current_user_id).all()
     
-    return render_template('ingresos.html', ingresos=ingresos)
+    return render_template('ingresos.html', ingresos=ingresos, usuario=usuario)
 
 @ingresos_bp.route('/ingresos/eliminar/<int:ingreso_id>', methods=['POST'])
 @jwt_required()

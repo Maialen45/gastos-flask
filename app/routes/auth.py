@@ -40,7 +40,7 @@ def register():
         db.session.commit()
 
         access_token = create_access_token(identity=str(usuario.id), additional_claims={'role': usuario.role})
-        response = make_response(render_template('dashboard.html', usuario=usuario, token=access_token))
+        response = make_response(render_template('dashboard.html', usuario=usuario, token=access_token, mostrar_welcome=True))
         set_access_cookies(response, access_token)
 
         return response
@@ -66,7 +66,7 @@ def login():
 
         # Crear token JWT
         access_token = create_access_token(identity=str(usuario.id), additional_claims={'role': usuario.role})
-        response = make_response(render_template('dashboard.html', usuario=usuario, token=access_token))
+        response = make_response(render_template('dashboard.html', usuario=usuario, token=access_token, mostrar_welcome=True))
         set_access_cookies(response, access_token)
 
         return response
