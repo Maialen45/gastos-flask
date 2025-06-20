@@ -2,7 +2,6 @@ from flask import Blueprint, redirect, render_template, request, jsonify
 from ..models.gastos import Gastos
 from ..models.usuario import Usuario
 from ..extensions import db
-from ..utils.decorators import roles_required
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 gastos_bp = Blueprint('gastos', __name__)
@@ -66,8 +65,3 @@ def eliminar_gasto(gasto_id):
 
     return redirect('/gastos')
 
-@gastos_bp.route('/analisis', methods=['GET'])
-@roles_required('admin')
-@jwt_required()
-def mostrar_analisis():
-    return render_template('analisis.html')

@@ -20,9 +20,12 @@ def create_app(config_class=None):
     from .routes.gastos import gastos_bp
     from .routes.auth import auth_bp
     from .routes.ingresos import ingresos_bp
+    from .routes.analisis import analisis_bp
     app.register_blueprint(gastos_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(ingresos_bp)
+    app.register_blueprint(analisis_bp)
+
 
 
     return app
